@@ -1,0 +1,23 @@
+{
+  "name": "lafoxtexapi",
+  "version": "1.0.0",
+  "description": "API for the lafoxtex service",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "esm": "^3.2.25",
+    "express": "^4.17.3",
+    "mathjax-full": "^3.2.0",
+    "morgan": "^1.10.0",
+    "mysql2": "^2.3.3",
+    "rate-limit-redis": "^3.0.1",
+    "redis": "^4.0.6",
+    "sharp": "^0.30.4",
+    "uuid": "^8.3.2",
+    "yargs": "^17.4.1"
+  }
+}
