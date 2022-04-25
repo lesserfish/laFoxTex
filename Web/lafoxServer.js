@@ -203,25 +203,26 @@ app.post('/create', async (req, res) => {
     try {
         options = JSON.parse(optionsraw);
     }catch(ex) {
-        res.send("Error");
+        res.status(400).send("'options' needs to be a valid JSON file.");
     }
     
     out = await lafoxStorage.GenerateImage(id, src, options);
 
     if(out.error) {
-        res.send(out.error);
+        res.status(out.code).send(out.error);
         return;
     }
-    res.send(out.path);
+    res.status(out.code).send(out.path);
 })
 
 app.get('/image/:ID', async (req, res) => {
-    var output = await lafoxStorage.RetrieveImage(req.params.ID);
-    if(output.error) {
-        res.send("ERR");
+    var out = await lafoxStorage.RetrieveImage(req.params.ID);
+    if(out.error) {
+        res.status(out.code).send(out.error);
         return;
     }
-    res.sendFile(output.path);
+    console.log(out.code);
+    res.status(out.code).sendFile(out.path);
 })
 // Start Listening
 

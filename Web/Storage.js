@@ -90,6 +90,7 @@ class Storage {
             if(err){
                 console.log(err);
                 return {
+                    code: 500,
                     error: "Internal error.",
                     path: ""
                 }
@@ -100,6 +101,7 @@ class Storage {
         // If it isn't return error, else:
         if(!uuidexists){
             return {
+                code: 400,
                 error: "No information under that UUID.",
                 path: ""
             }
@@ -111,6 +113,7 @@ class Storage {
             if(err){
                 console.log(err);
                 return {
+                    code: 500,
                     error: "Internal error.",
                     path: ""
                 }
@@ -125,6 +128,7 @@ class Storage {
 
             if(doublecheck) {
                 return {
+                    code: 200,
                     error: null,
                     path: filepath
                 }
@@ -133,6 +137,7 @@ class Storage {
                     if(err){
                         console.log(err);
                         return {
+                            code: 500,
                             error: "Internal error.",
                             path: ""
                         }
@@ -146,6 +151,7 @@ class Storage {
             if(err){
                 console.log(err);
                 return {
+                    code: 500,
                     error: "Internal error.",
                     path: ""
                 }
@@ -160,6 +166,7 @@ class Storage {
             options = JSON.parse(rawoptions);
         } catch(ex){
             return {
+                code: 400,
                 error: "Invalid image parameters.",
                 path: ""
             }
@@ -190,7 +197,9 @@ class Storage {
         })
         
         // return the path of the new image
-        return {error: null,
+        return {
+                code: 200,
+                error: null,
                 path: filepath}
     }
 
@@ -201,6 +210,7 @@ class Storage {
             if(err){
                 console.log(err);
                 return {
+                    code: 500,
                     error: "Internal error.",
                     path: ""
                 }
@@ -210,6 +220,7 @@ class Storage {
         
         if(uuidexists) {
             return {
+                code: 401,
                 error: "UUID Exists",
                 path: ""
             }
@@ -245,7 +256,9 @@ class Storage {
         await this.AddToStorage(uuid);
 
         // Return path of new image
-        return {error: null,
+        return {
+                code: 200,
+                error: null,
                 path: imgpath}
     }
 
