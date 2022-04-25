@@ -181,7 +181,7 @@ class Storage {
             resizeHeight: options.resizeHeight
         })
 
-        await this.AddFile(uuid, png);
+        await this.CreateFile(uuid, png);
         var filepath = path.join(this.StorageConfig.storagepath, uuid + ".png");
         
         await this.AddToStorage(uuid);
@@ -250,7 +250,7 @@ class Storage {
                 path: ""
             }
         }
-        var imgpath = await this.AddFile(uuid, png);
+        var imgpath = await this.CreateFile(uuid, png);
         // Add entry to MySQL
         
         var rawoptions = JSON.stringify(options)
@@ -295,7 +295,7 @@ class Storage {
             })
         }
     }
-    async AddFile(uuid, content) {
+    async CreateFile(uuid, content) {
         var filepath = path.join(this.StorageConfig.storagepath, uuid + ".png");
 
         fs.writeFile(filepath, content, "binary", (err) => {
