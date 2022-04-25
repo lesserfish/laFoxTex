@@ -212,7 +212,13 @@ app.post('/create', async (req, res) => {
         res.status(out.code).send(out.error);
         return;
     }
-    res.status(out.code).send(out.path);
+
+    var response = {
+        id: out.path,
+        redirection: req.hostname + "/image/" + out.path
+    }
+
+    res.status(out.code).send(response);
 })
 
 app.get('/image/:ID', async (req, res) => {
