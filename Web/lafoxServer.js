@@ -101,18 +101,6 @@ const argv = yargs.scriptName("lafoxServer.js")
             default: 1000,
             describe: "Maximum size of latex source code."
         },
-        MathJaxPackages: {
-            default: 'base, autoload, require, ams, newcommand',
-            describe: "Tex packages to use."
-        },
-        MathJaxCSSPath: {
-            default: "",
-            describe: "MathJax CSS"
-        },
-        MathJaxFontCache: {
-            default: true,
-            describe: "whether to use a local font cache or not."
-        }
 
     })
     .argv
