@@ -165,11 +165,7 @@ class Storage {
         try {
             options = JSON.parse(rawoptions);
         } catch(ex){
-            return {
-                code: 400,
-                error: "Invalid image parameters.",
-                path: ""
-            }
+            options = {}
         }
 
         var svg = tex.TexToSVG(texsrc, {
