@@ -11,7 +11,6 @@ class Storage {
     StorageConfig = {}
     SQLConfig = {}
     REDISConfig = {}
-    TEXConfig = {}
 
     constructor(options){
         // SQL
@@ -35,10 +34,6 @@ class Storage {
         this.StorageConfig["maxstorage"] = options.maxstorage;
         this.StorageConfig["maximgsize"] = options.maximagesize;
         this.StorageConfig["maxinputsize"] = options.maxinputsize;
-
-        // TEX
-
-        this.TEXConfig = options.texOptions;
 
         this.Initialize()
     }
