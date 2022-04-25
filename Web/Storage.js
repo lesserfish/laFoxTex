@@ -205,6 +205,13 @@ class Storage {
 
     async GenerateImage(uuid, texsrc, options) {
         
+        if(texsrc.length > this.StorageConfig.maxinputsize) {
+            return {
+                code: 401,
+                error: "Request too large",
+                path: ""
+            }
+        }
         // Check MySQL to see if image is on record
         var response = await this.SQLConnection.promise().query("SELECT * FROM requests WHERE uuid = ?", [uuid], (err, results, fields) => {
             if(err){
@@ -240,6 +247,13 @@ class Storage {
             resizeHeight: options.resizeHeight
         })
         
+        if(png.byteLength > this.StorageConfig.maximgsize){
+            return {
+                code: 401,
+                error: "Image size too large",
+                path: ""
+            }
+        }
         var imgpath = await this.AddFile(uuid, png);
         // Add entry to MySQL
         
