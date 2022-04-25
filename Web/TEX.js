@@ -8,9 +8,6 @@ const sharp = require("sharp")
 const {AllPackages} = require('mathjax-full/js/input/tex/AllPackages.js');
 const { hide } = require('yargs');
 
-//
-//  Minimal CSS needed for stand-alone image
-//
 const CSS = [
   'svg a{fill:blue;stroke:blue}',
   '[data-mml-node="merror"]>g{fill:red;stroke:red}',
@@ -21,16 +18,9 @@ const CSS = [
   'use[data-c]{stroke-width:3px}'
 ].join('');
 
-//
-//  Get the command-line arguments
-//
-
 const adaptor = liteAdaptor();
 const handler = RegisterHTMLHandler(adaptor);
 
-//
-//  Create input and output jax and a document using them on the content from the HTML file
-//
 const tex = new TeX({packages: AllPackages.sort().join(', ').split(/\s*,\s*/)});
 const svg = new SVG({fontCache: 'local'});
 const html = mathjax.document('', {InputJax: tex, OutputJax: svg});
