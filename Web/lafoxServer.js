@@ -37,6 +37,10 @@ const argv = yargs.scriptName("lafoxServer.js")
             default: 0,
             describe: "Redis database."
         },
+        lafoxHost: {
+            default:"localhost",
+            describe: "Host in which to serve the server."
+        },
         lafoxPort: {
             default:3000,
             describe: "laFoxServer port."
@@ -219,11 +223,11 @@ app.get('/image/:ID', async (req, res) => {
 })
 // Start Listening
 
-app.listen(argv.lafoxPort, async (err)=>{
+app.listen(argv.lafoxPort, argv.lafoxHost, async (err)=>{
     if(err) {
         console.error(err);
     } else {
-        console.log(`Started listening on port ${argv.lafoxPort}`);
+        console.log(`Started listening on  ${argv.lafoxHost}:${argv.lafoxPort}`);
     }
 })
 
