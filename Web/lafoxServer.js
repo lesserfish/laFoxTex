@@ -203,7 +203,7 @@ app.post('/create', async (req, res) => {
     try {
         options = JSON.parse(optionsraw);
     }catch(ex) {
-        res.status(400).send("'options' needs to be a valid JSON file.");
+        options = {}
     }
     
     out = await lafoxStorage.GenerateImage(id, src, options);
