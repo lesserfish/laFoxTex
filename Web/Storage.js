@@ -3,9 +3,6 @@ const redis = require('redis')
 const tex = require("./TEX.js")
 const fs = require('fs')
 const path = require("path");
-const { ConnectionTimeoutError } = require('redis');
-const { off } = require('process');
-const { showCompletionScript } = require('yargs');
 
 class Storage {
     StorageConfig = {}

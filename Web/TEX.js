@@ -4,9 +4,7 @@ const {SVG} = require('mathjax-full/js/output/svg.js');
 const {liteAdaptor} = require('mathjax-full/js/adaptors/liteAdaptor.js');
 const {RegisterHTMLHandler} = require('mathjax-full/js/handlers/html.js');
 const sharp = require("sharp")
-
 const {AllPackages} = require('mathjax-full/js/input/tex/AllPackages.js');
-const { hide } = require('yargs');
 
 const CSS = [
   'svg a{fill:blue;stroke:blue}',
