@@ -4,6 +4,8 @@ const tex = require("./TEX.js")
 const fs = require('fs')
 const path = require("path");
 const { ConnectionTimeoutError } = require('redis');
+const { off } = require('process');
+const { showCompletionScript } = require('yargs');
 
 class Storage {
     StorageConfig = {}
@@ -96,7 +98,6 @@ class Storage {
 
         var uuidexists = response[0].length > 0;
         // If it isn't return error, else:
-
         if(!uuidexists){
             return {
                 error: "No information under that UUID.",
@@ -117,7 +118,7 @@ class Storage {
         })
 
         var status = statuspromise[0][0].status;
-
+        
         if(status == "alive"){
             var filepath = path.join(this.StorageConfig.storagepath, uuid + ".png");
             var doublecheck = fs.existsSync(filepath)
@@ -153,6 +154,7 @@ class Storage {
 
         var texsrc = srcpromise[0][0].request;
         var rawoptions = srcpromise[0][0].options;
+
         var options;
         try {
             options = JSON.parse(rawoptions);
@@ -176,19 +178,20 @@ class Storage {
             resizeHeight: options.resizeHeight
         })
 
-        imgpath = await this.AddFile(uuid, png);
+        await this.AddFile(uuid, png);
+        var filepath = path.join(this.StorageConfig.storagepath, uuid + ".png");
         
-        this.AddToStorage(uuid);
+        await this.AddToStorage(uuid);
         
         this.SQLConnection.execute("UPDATE requests SET status = 'alive' WHERE uuid = ?", [uuid], (err) => {
             if(err) {
                 console.log(err)
             }
         })
-
+        
         // return the path of the new image
         return {error: null,
-                path: imgpath}
+                path: filepath}
     }
 
     async GenerateImage(uuid, texsrc, options) {
@@ -239,9 +242,9 @@ class Storage {
 
         // Add image to storage
 
-        this.AddToStorage(uuid);
+        await this.AddToStorage(uuid);
 
-                // Return path of new image
+        // Return path of new image
         return {error: null,
                 path: imgpath}
     }
@@ -257,12 +260,11 @@ class Storage {
         // Delete old image from File
         
         if(currentsize > this.StorageConfig.maxstorage) {
+            
             var olduuid = await this.redisClient.LPOP("storage");
             this.RemoveFile(olduuid);
             
-            // Update MySQL Status
-
-            this.SQLConnection.execute("UPDATE requests SET status = 'dead' WHERE uuid = ?", [uuid], (err) => {
+            this.SQLConnection.execute("UPDATE requests SET status = 'dead' WHERE uuid = ?", [olduuid], (err) => {
                 if(err) {
                     console.log(err)
                 }
@@ -282,7 +284,11 @@ class Storage {
     async RemoveFile(uuid) {
         var filepath = path.join(this.StorageConfig.storagepath, uuid + ".png");
 
-        fs.unlink(filepath)
+        fs.unlink(filepath, (err) => {
+            if(err) {
+                console.log(err);
+            }
+        })
     }
 }
 

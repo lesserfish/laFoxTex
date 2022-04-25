@@ -194,23 +194,19 @@ app.use(express.static(path.join(__dirname, argv.htmlDirectory)));
 
 app.post('/create', async (req, res) => {
     
-    var id = uuid.v4()
-    var idstr = id.toString();
-    
-    var body;
+    var id = uuid.v4().toString()
     
     var src = req.body.texsrc;
     var optionsraw = req.body.options;
 
     var options;
-    
     try {
         options = JSON.parse(optionsraw);
     }catch(ex) {
         res.send("Error");
     }
     
-    out = await lafoxStorage.GenerateImage(idstr, src, options);
+    out = await lafoxStorage.GenerateImage(id, src, options);
 
     if(out.error) {
         res.send(out.error);
@@ -222,7 +218,7 @@ app.post('/create', async (req, res) => {
 app.get('/image/:ID', async (req, res) => {
     var output = await lafoxStorage.RetrieveImage(req.params.ID);
     if(output.error) {
-        res.send(output.error);
+        res.send("ERR");
         return;
     }
     res.sendFile(output.path);
