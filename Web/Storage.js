@@ -274,6 +274,7 @@ class Storage {
                 code: 200,
                 error: null,
                 path: imgpath}
+                
     }
 
     async AddToStorage(uuid) {
@@ -302,7 +303,9 @@ class Storage {
         var filepath = path.join(this.StorageConfig.storagepath, uuid + ".png");
 
         fs.writeFile(filepath, content, "binary", (err) => {
-            console.error(err);
+            if(err) {
+                console.error(err);
+            }
         });
 
         return uuid;

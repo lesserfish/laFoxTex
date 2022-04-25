@@ -215,7 +215,6 @@ app.get('/image/:ID', async (req, res) => {
         res.status(out.code).send(out.error);
         return;
     }
-    console.log(out.code);
     res.status(out.code).sendFile(out.path);
 })
 // Start Listening
