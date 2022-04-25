@@ -164,10 +164,10 @@ class Storage {
         }
 
         var svg = tex.TexToSVG(texsrc, {
-            inline: options.inline == undefined ? true : false,
-            em: options.em == undefined ? options.em : 16,
-            ex: options.ex == undefined ? options.ex : 16,
-            width: options.width == undefined ? options.width : 80 * 60
+            inline: options.inline != undefined ? true : false,
+            em: options.em != undefined ? options.em : 16,
+            ex: options.ex != undefined ? options.ex : 16,
+            width: options.width != undefined ? options.width : 80 * 60
         })
         
         var png = await tex.SVGToPng(svg, {
@@ -177,6 +177,8 @@ class Storage {
         })
 
         imgpath = await this.AddFile(uuid, png);
+        
+        this.AddToStorage(uuid);
         
         this.SQLConnection.execute("UPDATE requests SET status = 'alive' WHERE uuid = ?", [uuid], (err) => {
             if(err) {
