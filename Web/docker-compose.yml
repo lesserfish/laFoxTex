@@ -1,0 +1,40 @@
+version: "2.1"
+
+services:
+  mysql:
+    image: mysql:8.0.17
+    container_name: sql
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: db
+    ports:
+      - 3306:3306
+    volumes:
+      - ./Data/db/:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 1m
+      retries: 30
+  redis:
+    container_name: redis
+    image: redis:latest
+    restart: always
+    ports:
+      - 6379:6379
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 1m
+      retries: 30
+  lafoxtex:
+    depends_on:
+      mysql:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    container_name: lafoxtex
+    build: .
+    command: ["npm", "start", "--", "--redisHost", "redis", "--SQLHost", "sql", "--SQLUser", "root", "--SQLPass", "password", "--SQLDB", "db", "--lafoxHost", "0.0.0.0"]
+    restart: always
+    

@@ -79,11 +79,11 @@ const argv = yargs.scriptName("lafoxServer.js")
             describe: "MySQL username."
         },
         SQLPass: {
-            default: "tigersatemysnack",
+            default: "",
             describe: "MySQL password."
         },
         SQLDB: {
-            default: "test",
+            default: "",
             describe: "MySQL Database."
         },
         storagePath: {
@@ -95,7 +95,7 @@ const argv = yargs.scriptName("lafoxServer.js")
             describe: "Maximum amount of images stored in the hard drive."
         },
         maxImageSize: {
-            default: 3000,
+            default: 10000,
             describe: "Maximum size of an image in bytes."
         },
         maxInputSize: {
@@ -120,7 +120,7 @@ const redisClient = redis.createClient({
 redisClient.on('error', (err) => {console.log('Redis Client Error', err); return -1;});
 
 async function ConnectToRedis(){
-    console.log("Creting Redis Connection.");
+    console.log("Creating Redis Connection.");
     await redisClient.connect();
     redisClient.select(argv.redisDatabase);
     console.log("Redis initialized!")
