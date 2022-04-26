@@ -36,6 +36,8 @@ services:
       redis:
         condition: service_healthy
     container_name: lafoxtex
+    ports:
+      - 3000:3000
     volumes:
       - "./Storage:/fox/storage"
     build: .
