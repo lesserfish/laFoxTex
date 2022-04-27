@@ -12,7 +12,7 @@ services:
     ports:
       - 3306:3306
     volumes:
-      - ./Data/db/:/var/lib/mysql
+      - ../Data/SQL:/var/lib/mysql
     healthcheck:
       test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
       interval: 1m
@@ -24,7 +24,7 @@ services:
     ports:
       - 6379:6379
     volumes:
-      - "./Data/Redis:/Data"
+      - "../Data/Redis:/Data"
     healthcheck:
       test: ["CMD", "redis-cli", "ping"]
       interval: 1m
@@ -39,7 +39,7 @@ services:
     ports:
       - 3000:3000
     volumes:
-      - "./Storage:/fox/storage"
+      - "../Data/Storage:/fox/storage"
     build: .
     command: ["npm", "start", "--", "--redisHost", "redis", "--SQLHost", "sql", "--SQLUser", "root", "--SQLPass", "password", "--SQLDB", "db", "--lafoxHost", "0.0.0.0", "--storagePath", "/fox/web"]
     restart: always
