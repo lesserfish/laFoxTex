@@ -93,57 +93,47 @@ class Storage {
             outoptions.inline = true;
         }
         if(inoptions.em) {
-            try{
-                var em = parseInt(inoptions.em);
+            var em = parseInt(inoptions.em);
+            if(!isNaN(em)){
                 em = Math.min(em, 64);
                 em = Math.max(em, 0);
                 outoptions.em = em;
                 console.log(em);
-            } catch(e) {
             }
         }
         if(inoptions.ex) {
-            try{
-                var ex = parseInt(inoptions.ex);
+            var ex = parseInt(inoptions.ex);
+            if(!isNaN(ex)){
                 ex = Math.min(ex, 64);
                 ex = Math.max(ex, 0);
                 outoptions.ex = ex;
-            } catch(e) {
-                
             }
         }
         if(inoptions.width) {
-            try{
-                var width = parseInt(inoptions.width);
+            var width = parseInt(inoptions.width);
+            if(!isNaN(width)){
                 outoptions.width = width;
-            } catch(e) {
-                
             }
         }
         if(inoptions.resize) {
-            try{
-                var resize = parseFloat(inoptions.resize);
+            var resize = parseFloat(inoptions.resize);
+            if(!isNaN(resize)){
+                resize = Math.max(resize, 0);
                 outoptions.resize = resize;
-            } catch(e) {
-                
             }
         }
         if(inoptions.resizeWidth) {
-            try{
-                var resizeWidth = parseInt(inoptions.resizeWidth);
+            var resizeWidth = parseInt(inoptions.resizeWidth);
+            if(!isNaN(resizeWidth)){
                 resizeWidth = Math.max(resizeWidth, 0);
                 outoptions.resizeWidth = resizeWidth;
-            } catch(e) {
-                
             }
         }
         if(inoptions.resizeHeight) {
-            try{
-                var resizeHeight = parseInt(inoptions.resizeHeight);
+            var resizeHeight = parseInt(inoptions.resizeHeight);
+            if(!isNaN(resizeHeight)){
                 resizeHeight = Math.max(resizeHeight, 0);
                 outoptions.resizeHeight = resizeHeight;
-            } catch(e) {
-                
             }
         }
 
