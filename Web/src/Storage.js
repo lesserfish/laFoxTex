@@ -77,8 +77,6 @@ class Storage {
 
     // API
     ValidateOptions(inoptions) {
-        console.log(inoptions)
-
         var outoptions = {
             inline: false,
             em: 16,
