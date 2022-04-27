@@ -3,6 +3,7 @@ const redis = require('redis')
 const tex = require("./TEX.js")
 const fs = require('fs')
 const path = require("path");
+const e = require('express');
 
 class Storage {
     StorageConfig = {}
@@ -75,7 +76,75 @@ class Storage {
     }
 
     // API
+    ValidateOptions(inoptions) {
 
+        var outoptions = {
+            inline: false,
+            em: 16,
+            ex: 16,
+            width: 80 * 6,
+            resize: null,
+            resizeWidth: null,
+            resizeHeight: null
+        }
+
+        if(inoptions.inline) {
+            outoptions.inline = true;
+        }
+        if(inoptions.em) {
+            try{
+                var em = parseInt(inoptions.em);
+                em = Math.min(em, 64);
+                em = Math.max(em, 0);
+                outoptions.em = em;
+            } catch(e) {
+            }
+        }
+        if(inoptions.ex) {
+            try{
+                var ex = parseInt(inoptions.ex);
+                ex = Math.min(ex, 64);
+                ex = Math.max(ex, 0);
+                outoptions.ex = ex;
+            } catch(e) {
+                
+            }
+        }
+        if(inoptions.width) {
+            try{
+                var width = parseInt(inoptions.width);
+                outoptions.width = width;
+            } catch(e) {
+                
+            }
+        }
+        if(inoptions.resize) {
+            try{
+                var resize = parseInt(inoptions.resize);
+                outoptions.resize = resize;
+            } catch(e) {
+                
+            }
+        }
+        if(inoptions.resizeWidth) {
+            try{
+                var resizeWidth = parseInt(inoptions.resizeWidth);
+                outoptions.resizeWidth = resizeWidth;
+            } catch(e) {
+                
+            }
+        }
+        if(inoptions.resizeHeight) {
+            try{
+                var resizeHeight = parseInt(inoptions.resizeHeight);
+                outoptions.resizeHeight = resizeHeight;
+            } catch(e) {
+                
+            }
+        }
+
+        return outoptions;
+    }
     async RetrieveImage(uuid) {
         // Check MySQL to see if image is on record
         var response = await this.SQLConnection.promise().query("SELECT * FROM requests WHERE uuid = ?", [uuid], (err, results, fields) => {
@@ -160,11 +229,13 @@ class Storage {
             options = {}
         }
 
+        options = this.ValidateOptions(options)
+        
         var svg = tex.TexToSVG(texsrc, {
-            inline: options.inline != undefined ? true : false,
-            em: options.em != undefined ? options.em : 16,
-            ex: options.ex != undefined ? options.ex : 16,
-            width: options.width != undefined ? options.width : 80 * 60
+            inline: options.inline,
+            em: options.em,
+            ex: options.ex,
+            width: options.width
         })
         
         var png = await tex.SVGToPng(svg, {
@@ -222,11 +293,13 @@ class Storage {
         }
         // Create Image using TEX
 
+        options = this.ValidateOptions(options)
+
         var svg = tex.TexToSVG(texsrc, {
-            inline: options.inline == undefined ? true : false,
-            em: options.em != undefined ? options.em : 16,
-            ex: options.ex != undefined ? options.ex : 16,
-            width: options.width != undefined ? options.width : 80 * 60
+            inline: options.inline,
+            em: options.em,
+            ex: options.ex,
+            width: options.width
         })
         
         var png = await tex.SVGToPng(svg, {

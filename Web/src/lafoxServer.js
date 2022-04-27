@@ -186,15 +186,23 @@ app.post('/create', async (req, res) => {
     var id = uuid.v4().toString()
     
     var src = req.body.texsrc;
-    var optionsraw = req.body.options;
-
-    var options;
-    try {
-        options = JSON.parse(optionsraw);
-    }catch(ex) {
-        options = {}
+    if(!(typeof src === 'string' || src instanceof String)){
+        res.status(400).send("POST body needs to contain a string of name 'texsrc'.");
     }
-    
+    if(src.length == 0){
+        res.status(400).send("texsrc is empty.");
+    }
+
+    var options = {
+        inline: req.body.inline,
+        em: req.body.em,
+        ex: req.body.ex,
+        width: req.body.width,
+        resize: req.body.resize,
+        resizeWidth: req.body.resizeWidth,
+        resizeHeight: req.body.resizeHeight
+    }
+
     out = await lafoxStorage.GenerateImage(id, src, options);
 
     if(out.error) {
