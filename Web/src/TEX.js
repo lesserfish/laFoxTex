@@ -45,7 +45,7 @@ var SVGToPng = async function(svg, options) {
     options.resize = (options.resize == undefined) ? null : options.resize;
     
     if(options.resize){
-        var newWidth = (await img.metadata()).width * options.resize
+        var newWidth = parseInt((await img.metadata()).width * options.resize);
         img = img.resize(newWidth);
     }
     else if(options.resizeWidth || options.resizeHeight){

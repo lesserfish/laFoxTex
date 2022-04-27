@@ -128,7 +128,7 @@ class Storage {
         }
         if(inoptions.resizeWidth) {
             try{
-                var resizeWidth = parseFloat(inoptions.resizeWidth);
+                var resizeWidth = parseInt(inoptions.resizeWidth);
                 outoptions.resizeWidth = resizeWidth;
             } catch(e) {
                 
@@ -136,7 +136,7 @@ class Storage {
         }
         if(inoptions.resizeHeight) {
             try{
-                var resizeHeight = parseFloat(inoptions.resizeHeight);
+                var resizeHeight = parseInt(inoptions.resizeHeight);
                 outoptions.resizeHeight = resizeHeight;
             } catch(e) {
                 
