@@ -77,6 +77,7 @@ class Storage {
 
     // API
     ValidateOptions(inoptions) {
+        console.log(inoptions)
 
         var outoptions = {
             inline: false,
@@ -97,6 +98,7 @@ class Storage {
                 em = Math.min(em, 64);
                 em = Math.max(em, 0);
                 outoptions.em = em;
+                console.log(em);
             } catch(e) {
             }
         }
@@ -129,6 +131,7 @@ class Storage {
         if(inoptions.resizeWidth) {
             try{
                 var resizeWidth = parseInt(inoptions.resizeWidth);
+                resizeWidth = Math.max(resizeWidth, 0);
                 outoptions.resizeWidth = resizeWidth;
             } catch(e) {
                 
@@ -137,6 +140,7 @@ class Storage {
         if(inoptions.resizeHeight) {
             try{
                 var resizeHeight = parseInt(inoptions.resizeHeight);
+                resizeHeight = Math.max(resizeHeight, 0);
                 outoptions.resizeHeight = resizeHeight;
             } catch(e) {
                 
