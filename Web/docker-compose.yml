@@ -41,6 +41,6 @@ services:
     volumes:
       - "../Data/Storage:/fox/storage"
     build: .
-    command: ["npm", "start", "--", "--redisHost", "redis", "--SQLHost", "sql", "--SQLUser", "root", "--SQLPass", "password", "--SQLDB", "db", "--lafoxHost", "0.0.0.0", "--storagePath", "/fox/web"]
+    command: ["npm", "start", "--", "--redisHost", "redis", "--SQLHost", "sql", "--SQLUser", "root", "--SQLPass", "password", "--SQLDB", "db", "--lafoxHost", "127.0.0.1", "--storagePath", "/fox/web"]
     restart: always
     

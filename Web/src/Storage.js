@@ -120,7 +120,7 @@ class Storage {
         }
         if(inoptions.resize) {
             try{
-                var resize = parseInt(inoptions.resize);
+                var resize = parseFloat(inoptions.resize);
                 outoptions.resize = resize;
             } catch(e) {
                 
@@ -128,7 +128,7 @@ class Storage {
         }
         if(inoptions.resizeWidth) {
             try{
-                var resizeWidth = parseInt(inoptions.resizeWidth);
+                var resizeWidth = parseFloat(inoptions.resizeWidth);
                 outoptions.resizeWidth = resizeWidth;
             } catch(e) {
                 
@@ -136,7 +136,7 @@ class Storage {
         }
         if(inoptions.resizeHeight) {
             try{
-                var resizeHeight = parseInt(inoptions.resizeHeight);
+                var resizeHeight = parseFloat(inoptions.resizeHeight);
                 outoptions.resizeHeight = resizeHeight;
             } catch(e) {
                 
