@@ -1,0 +1,23 @@
+{
+  "manifest_version": 2,
+  "name": "laFoxtTex",
+  "version": "1.0",
+
+  "description": "Converts latex into images.", 
+
+  "browser_action": {
+    "default_title": "laFoxTex",
+    "default_icon": "icons/popup.png",
+    "default_popup": "popup/popup.html"
+  },
+
+  "background": {
+    "scripts": ["background/background.js"]
+  },
+  
+  "permissions": [
+    "menus",
+    "activeTab"
+  ]
+}
+

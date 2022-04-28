@@ -162,18 +162,7 @@ class Storage {
 
         // Check to see if image is on storage. If it is, return it's path. Else, 
 
-        var statuspromise = await this.SQLConnection.promise().query("SELECT status FROM requests WHERE uuid = ?", [uuid], (err, results, fields) => {
-            if(err){
-                console.log(err);
-                return {
-                    code: 500,
-                    error: "Internal error.",
-                    path: ""
-                }
-            }
-        })
-
-        var status = statuspromise[0][0].status;
+        var status = response[0][0].status;
         
         if(status == "alive"){
             var filepath = path.join(this.StorageConfig.storagepath, uuid + ".png");
@@ -200,19 +189,8 @@ class Storage {
         }
         // Get tex_src from uuid, and generate the image again
 
-        var srcpromise = await this.SQLConnection.promise().query("SELECT request, options FROM requests WHERE uuid = ?", [uuid], (err, results, fields) => {
-            if(err){
-                console.log(err);
-                return {
-                    code: 500,
-                    error: "Internal error.",
-                    path: ""
-                }
-            }
-        })
-
-        var texsrc = srcpromise[0][0].request;
-        var rawoptions = srcpromise[0][0].options;
+        var texsrc = response[0][0].request;
+        var rawoptions = response[0][0].options;
 
         var options;
         try {
