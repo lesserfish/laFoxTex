@@ -1,5 +1,6 @@
 body {
     overflow-x: hidden;
+    overflow-y: hidden;
 }
 
 .texfield {
@@ -52,5 +53,11 @@ img{
   max-height: 100px;
 }
 .out {
+    text-align: center;
+}
+.spinner-border {
+    visibility: hidden;
+}
+.killmenow {
     text-align: center;
 }

@@ -1,4 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
+    
     var scale = document.getElementById('scale-form');
     scale.addEventListener('input', () => {
         var rangeval = document.getElementById('rangeval');
@@ -9,9 +10,12 @@ document.addEventListener('DOMContentLoaded', () => {
     render_button.addEventListener('click', () => {
         var outmsg = document.getElementById('output_message')
         var outimg = document.getElementById('output_image');
+        var loadingbar = document.getElementById('loadingbar')
+
 
         outmsg.innerText = ""
         outimg.src = ""
+        loadingbar.style.visibility = 'visible';
 
         var scale = document.getElementById('scale-form');
         var scale_value = parseFloat(scale.value) || 1.0;
@@ -37,7 +41,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         jsonrequest = JSON.stringify(reqparams);
-        console.log(jsonrequest);
 
         url = "https://lafoxtex.com/create"
 
@@ -47,6 +50,8 @@ document.addEventListener('DOMContentLoaded', () => {
         http.setRequestHeader("Content-Type", "application/json")
 
         http.onload = function(data) {
+            loadingbar.style.visibility = 'hidden';
+            
             if(!data) {
                 outmsg.innerText = "Error! Failed to connect to server."
                 outimg.src = "";
@@ -76,7 +81,6 @@ document.addEventListener('DOMContentLoaded', () => {
             outmsg.innerText = "";
             outimg.src = url;
 
-            console.log(url);
 
         }
 
