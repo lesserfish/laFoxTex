@@ -96,7 +96,6 @@ class Storage {
                 em = Math.min(em, 64);
                 em = Math.max(em, 0);
                 outoptions.em = em;
-                console.log(em);
             }
         }
         if(inoptions.ex) {
@@ -135,6 +134,7 @@ class Storage {
             }
         }
 
+        console.log(outoptions)
         return outoptions;
     }
     async RetrieveImage(uuid) {
@@ -199,20 +199,17 @@ class Storage {
             options = {}
         }
 
-        options = this.ValidateOptions(options)
+        var cleanoptions = this.ValidateOptions(options)
         
-        var svg = tex.TexToSVG(texsrc, {
-            inline: options.inline,
-            em: options.em,
-            ex: options.ex,
-            width: options.width
-        })
-        
-        var png = await tex.SVGToPng(svg, {
-            resize: options.resize,
-            resizeWidth: options.resideWidth,
-            resizeHeight: options.resizeHeight
-        })
+        var svg = tex.TexToSVG(texsrc, cleanoptions)
+        var png = await tex.SVGToPng(svg, cleanoptions)
+
+        if(!png) {
+            return {
+                code: 400,
+                error: "Could not generate png.",
+                path: ""}
+        }
 
         await this.CreateFile(uuid, png);
         var filepath = path.join(this.StorageConfig.storagepath, uuid + ".png");
@@ -263,20 +260,17 @@ class Storage {
         }
         // Create Image using TEX
 
-        options = this.ValidateOptions(options)
+        var cleanoptions = this.ValidateOptions(options);
 
-        var svg = tex.TexToSVG(texsrc, {
-            inline: options.inline,
-            em: options.em,
-            ex: options.ex,
-            width: options.width
-        })
+        var svg = tex.TexToSVG(texsrc, cleanoptions);
+        var png = await tex.SVGToPng(svg, cleanoptions);
         
-        var png = await tex.SVGToPng(svg, {
-            resize: options.resize,
-            resizeWidth: options.resideWidth,
-            resizeHeight: options.resizeHeight
-        })
+        if(!png){
+            return {
+                code: 400,
+                error: "Could not generate png.",
+                path: ""}
+        }
         
         if(png.byteLength > this.StorageConfig.maximgsize){
             return {

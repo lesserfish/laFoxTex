@@ -1,0 +1,47 @@
+body {
+    overflow-x: hidden;
+}
+
+.texfield {
+    width: 80%;
+}
+.centerobject {
+    text-align: center;
+    justify-content: center;
+    display: flex;
+}
+.navbar {
+    margin-top: 0;
+    margin-bottom: 0.8em;
+}
+
+.upmargin {
+    margin-top: 0.5em;
+}
+.bigdownmargin {
+    margin-bottom: 2em;
+}
+
+.options {
+    margin-top: 1.5em;
+    margin-left: 2%;
+}
+
+.btn {
+    margin-right: 15px;
+    margin-left: 15px;
+}
+
+input[type="number"] {
+    width: 4em;
+}
+input[type="range"] {
+    width: 70%;
+}
+
+.formev {
+    margin-bottom: 1em;
+}
+.error {
+    color: red;
+}

@@ -5,6 +5,7 @@ const {liteAdaptor} = require('mathjax-full/js/adaptors/liteAdaptor.js');
 const {RegisterHTMLHandler} = require('mathjax-full/js/handlers/html.js');
 const sharp = require("sharp")
 const {AllPackages} = require('mathjax-full/js/input/tex/AllPackages.js');
+const { exit } = require('yargs');
 
 const CSS = [
   'svg a{fill:blue;stroke:blue}',
@@ -24,7 +25,6 @@ const svg = new SVG({fontCache: 'local'});
 const html = mathjax.document('', {InputJax: tex, OutputJax: svg});
 
 var TexToSVG = function(texsrc, options){
-
     const node = html.convert(texsrc, {
         display: !options.inline,
         em: options.em,
@@ -40,19 +40,22 @@ var TexToSVG = function(texsrc, options){
 var SVGToPng = async function(svg, options) {
     var img = sharp(Buffer.from(svg));
     
-    options.resizeWidth = (options.resizeWidth == undefined) ? null : options.resizeWidth;
-    options.resizeHeight = (options.resizeHeight == undefined) ? null : options.resizeHeight;
-    options.resize = (options.resize == undefined) ? null : options.resize;
-    
     if(options.resize){
-        var newWidth = parseInt((await img.metadata()).width * options.resize);
-        img = img.resize(newWidth);
+        if(options.resize != 1){
+            var newWidth = parseInt((await img.metadata()).width * options.resize);
+            img = img.resize(newWidth);
+        }
     }
     else if(options.resizeWidth || options.resizeHeight){
         img = img.resize(options.resizeWidth, options.resizeHeight);
     }
-    var png = await img.png()
-    return png.toBuffer()
+    var png = img.png();
+    try {
+        var buffer = await png.toBuffer();
+    }catch(e) {
+        return null;
+    }
+    return buffer;
 }
 
 module.exports = {TexToSVG, SVGToPng}

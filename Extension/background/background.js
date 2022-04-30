@@ -63,7 +63,7 @@ browser.menus.create({
 browser.menus.onClicked.addListener((info, tab) => {
     if(info.menuItemId === "latexify"){
         console.log(info);
-        var selection = info.selectionText;
+        var selection = info.selectionText || "tex";
         var url = "https://latex.codecogs.com/png.image?";
         
         url += getFontSize("");
@@ -84,10 +84,10 @@ browser.menus.onClicked.addListener((info, tab) => {
                 code: `
                     var element = browser.menus.getTargetElement(${info.targetElementId});
                     console.log(element);
-                    element.firstChild.innerText = "";
-                    var img = document.createElement('img');
-                    img.src = "${img_src}";
-                    element.appendChild(img);
+                    //element.firstChild.innerText = "";
+                    //var img = document.createElement('img');
+                    //img.src = "${img_src}";
+                    //element.appendChild(img);
                 `,
             });
         });

@@ -1,5 +1,7 @@
 const express = require("express");
 const redis = require("redis");
+const cors = require("cors");
+const helmet = require("helmet");
 const rateLimit = require("express-rate-limit");
 const RedisStore = require("rate-limit-redis");
 const yargs = require("yargs");
@@ -8,6 +10,8 @@ const morgan = require('morgan')
 const storage = require("./Storage");
 const uuid = require("uuid");
 const bodyParser = require('body-parser');
+const { isUndefined } = require("util");
+const { json } = require("express");
 
 // Get Variables
 
@@ -143,11 +147,19 @@ const limiter = rateLimit({
 })
 
 app.use(limiter);
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 
 // Initialize Morgan
 
 app.use(morgan(argv.morganString))
+
+// Initialize CORS
+
+app.use(cors());
+
+// Initialize Helmet
+
+app.use(helmet())
 
 // Initialize Storage
 const TEXOptions = {
@@ -182,27 +194,36 @@ const lafoxStorage = storage.New(lafoxOptions);
 app.use(express.static(path.join(__dirname, argv.htmlDirectory)));
 
 app.post('/create', async (req, res) => {
-    
+   
+    if(!req.body) {
+        res.status(400).send("POST body needs to be a valid JSON.");
+        return;
+    }
     var id = uuid.v4().toString()
     
-    var src = req.body.texsrc;
+    var params = req.body;
+    var src = params.texsrc;
     if(!(typeof src === 'string' || src instanceof String)){
         res.status(400).send("POST body needs to contain a string of name 'texsrc'.");
+        return;
     }
     if(src.length == 0){
         res.status(400).send("texsrc is empty.");
+        return;
     }
 
     var options = {
-        inline: req.body.inline,
-        em: req.body.em,
-        ex: req.body.ex,
-        width: req.body.width,
-        resize: req.body.resize,
-        resizeWidth: req.body.resizeWidth,
-        resizeHeight: req.body.resizeHeight
+        inline: params.inline,
+        em: params.em,
+        ex: params.ex,
+        width: params.width,
+        resize: params.resize,
+        resizeWidth: params.resizeWidth,
+        resizeHeight: params.resizeHeight
     }
 
+    console.log(options);
+    
     out = await lafoxStorage.GenerateImage(id, src, options);
 
     if(out.error) {

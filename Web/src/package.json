@@ -9,8 +9,10 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "cors": "^2.8.5",
     "esm": "^3.2.25",
     "express": "^4.17.3",
+    "helmet": "^5.0.2",
     "mathjax-full": "^3.2.0",
     "morgan": "^1.10.0",
     "mysql2": "^2.3.3",
