@@ -33,7 +33,7 @@ document.addEventListener('DOMContentLoaded', () => {
         jsonrequest = JSON.stringify(reqparams);
         console.log(jsonrequest);
 
-        url = "http://localhost:3000/create"
+        url = "https://lafoxtex.com/create"
 
         var http = new XMLHttpRequest();
         http.open('POST', url);
@@ -68,7 +68,7 @@ document.addEventListener('DOMContentLoaded', () => {
             var id = obj.id;
             var imguri = obj.redirection;
 
-            var url = "http://localhost:3000/image/" + id;
+            var url = "https://" + imguri;
 
             outmsg.innerText = "";
             outimg.src = url;

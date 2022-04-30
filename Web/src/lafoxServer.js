@@ -159,7 +159,9 @@ app.use(cors());
 
 // Initialize Helmet
 
-app.use(helmet())
+app.use(helmet({
+    crossOriginResourcePolicy: false,
+}))
 
 // Initialize Storage
 const TEXOptions = {
@@ -223,7 +225,7 @@ app.post('/create', async (req, res) => {
     }
 
     console.log(options);
-    
+
     out = await lafoxStorage.GenerateImage(id, src, options);
 
     if(out.error) {
