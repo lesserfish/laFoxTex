@@ -99,7 +99,7 @@ const argv = yargs.scriptName("lafoxServer.js")
             describe: "Maximum amount of images stored in the hard drive."
         },
         maxImageSize: {
-            default: 10000,
+            default: 80000,
             describe: "Maximum size of an image in bytes."
         },
         maxInputSize: {
@@ -223,8 +223,6 @@ app.post('/create', async (req, res) => {
         resizeWidth: params.resizeWidth,
         resizeHeight: params.resizeHeight
     }
-
-    console.log(options);
 
     out = await lafoxStorage.GenerateImage(id, src, options);
 

@@ -45,3 +45,12 @@ input[type="range"] {
 .error {
     color: red;
 }
+img{
+  width: auto;
+  max-width: 150px;
+  height: auto;
+  max-height: 100px;
+}
+.out {
+    text-align: center;
+}

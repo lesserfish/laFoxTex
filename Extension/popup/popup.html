@@ -12,10 +12,8 @@
   </head>
   <body>
     <!-- Option 1: Bootstrap Bundle with Popper -->
-    <script src="./external/bootstrap/js/bootstrap.bundle.js">
-    </script>
-    <script src="./popup.js">
-    </script>
+    <script src="./external/bootstrap/js/bootstrap.bundle.js"></script>
+    <script src="./popup.js"></script>
     <div class="container-xl">
       <div class="row align-items-center centerobject">
         <nav class="navbar-text navbar-light bg-dark align-items-center text-secondary" id="navbar">
@@ -26,8 +24,7 @@
       </div>
       <div class="row align-items-center upmargin">
         <div class="col align-self-center centerobject">
-          <textarea class="form-control texfield" id="texsrc" rows="3" placeholder="Your latex source code here...">
-          </textarea>
+          <textarea class="form-control texfield" id="texsrc" rows="3" placeholder="Your latex source code here..."></textarea>
         </div>
       </div>
     </div>
@@ -93,12 +90,10 @@
         </div>
       </div>
     </div>
-    <div class="row align-items-center upmargin bigdownmargin">
-      <div class="col align-self-center centerobject">
-        <p class="error" id="output_message">
-        </p>
+    <!-- Output-->
+    <div class="out">
+        <p class="error" id="output_message"></p>
         <img id="output_image" src="">
-      </div>
     </div>
   </body>
 </html>

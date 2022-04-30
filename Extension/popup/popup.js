@@ -7,6 +7,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     var render_button = document.getElementById('render_button');
     render_button.addEventListener('click', () => {
+        var outmsg = document.getElementById('output_message')
+        var outimg = document.getElementById('output_image');
+
+        outmsg.innerText = ""
+        outimg.src = ""
+
         var scale = document.getElementById('scale-form');
         var scale_value = parseFloat(scale.value) || 1.0;
 
@@ -41,9 +47,6 @@ document.addEventListener('DOMContentLoaded', () => {
         http.setRequestHeader("Content-Type", "application/json")
 
         http.onload = function(data) {
-            var outmsg = document.getElementById('output_message')
-            var outimg = document.getElementById('output_image');
-            
             if(!data) {
                 outmsg.innerText = "Error! Failed to connect to server."
                 outimg.src = "";
