@@ -134,11 +134,10 @@ class Storage {
             }
         }
 
-        console.log(outoptions)
         return outoptions;
     }
     async RetrieveImage(uuid) {
-        
+
         // If file exists, return it.
         var filepath = path.join(this.StorageConfig.storagepath, uuid + ".png");
         var doublecheck = fs.existsSync(filepath)
