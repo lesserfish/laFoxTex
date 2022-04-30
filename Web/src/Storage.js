@@ -138,6 +138,19 @@ class Storage {
         return outoptions;
     }
     async RetrieveImage(uuid) {
+        
+        // If file exists, return it.
+        var filepath = path.join(this.StorageConfig.storagepath, uuid + ".png");
+        var doublecheck = fs.existsSync(filepath)
+
+        if(doublecheck) {
+            return {
+                code: 200,
+                error: null,
+                path: filepath
+            }
+        }
+
         // Check MySQL to see if image is on record
         var response = await this.SQLConnection.promise().query("SELECT * FROM requests WHERE uuid = ?", [uuid], (err, results, fields) => {
             if(err){
@@ -165,28 +178,20 @@ class Storage {
         var status = response[0][0].status;
         
         if(status == "alive"){
-            var filepath = path.join(this.StorageConfig.storagepath, uuid + ".png");
-            var doublecheck = fs.existsSync(filepath)
+            // Status is alive and image was not found. ERROR. Something went wrong.
 
-            if(doublecheck) {
-                return {
-                    code: 200,
-                    error: null,
-                    path: filepath
-                }
-            } else {
-                this.SQLConnection.execute("UPDATE requests SET status = 'dead' WHERE uuid = ?", [uuid], (err) => {
-                    if(err){
-                        console.log(err);
-                        return {
-                            code: 500,
-                            error: "Internal error.",
-                            path: ""
-                        }
+            this.SQLConnection.execute("UPDATE requests SET status = 'dead' WHERE uuid = ?", [uuid], (err) => {
+                if(err){
+                    console.log(err);
+                    return {
+                        code: 500,
+                        error: "Internal error.",
+                        path: ""
                     }
-                })
-            }
+                }
+            })
         }
+
         // Get tex_src from uuid, and generate the image again
 
         var texsrc = response[0][0].request;
